@@ -1,0 +1,55 @@
+# Claude Context Filtering
+# Files and directories to exclude from Claude Code context
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
+.expo/
+web-build/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Git
+.git/
+
+# Cache
+.metro-health-check*
+.eslintcache
+
+# Coverage reports
+coverage/
+
+# Environment files (keep .env.example)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Large asset files
+*.mp4
+*.mov
+*.avi
+*.large.png
+*.large.jpg
+
+# Documentation builds
+docs/build/
+storybook-static/

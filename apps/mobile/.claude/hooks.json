@@ -1,0 +1,10 @@
+{
+  "user-prompt-submit-hook": {
+    "description": "Automatically check context and validate requests before processing",
+    "command": "echo '📋 Context Check:' && ls -la .claudeignore CONTEXT.md CLAUDE.md && echo '✅ Ready to process request'"
+  },
+  "tool-use-hook": {
+    "description": "Track tool usage for session memory",
+    "command": "echo '🔧 Tool: %TOOL% - %TIMESTAMP%' >> .claude/session-memory.log"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "project": {
+    "name": "App-CertPlus-1",
+    "type": "react-native-expo",
+    "version": "1.0.0",
+    "description": "Industrial signage management with QR scanning and blockchain tokenization"
+  },
+  "architecture": {
+    "frontend": {
+      "framework": "React Native",
+      "version": "0.75.0",
+      "sdk": "Expo SDK 53",
+      "styling": "NativeWind (Tailwind CSS)",
+      "navigation": "Expo Router (file-based)",
+      "state_management": "React Context + Hooks"
+    },
+    "backend": {
+      "database": "MySQL",
+      "api": "REST API",
+      "authentication": "JWT tokens",
+      "persistence": "AsyncStorage",
+      "blockchain": "Algorand",
+      "storage": "IPFS"
+    }
+  },
+  "key_directories": {
+    "app/": "File-based routing with Expo Router",
+    "components/": "Reusable UI components",
+    "hooks/": "Business logic and state management",
+    "lib/": "Services, API clients, and utilities",
+    "types/": "TypeScript interface definitions",
+    "contexts/": "React Context providers"
+  },
+  "critical_features": [
+    "QR code scanning with camera",
+    "GPS location services",
+    "JWT authentication",
+    "Product management",
+    "Maintenance tracking",
+    "Blockchain tokenization"
+  ],
+  "development_commands": {
+    "start": "npx expo start",
+    "lint": "npm run lint",
+    "clear_cache": "npx expo start --clear",
+    "fix_deps": "npx expo install --fix"
+  },
+  "api_endpoints": {
+    "auth": "POST /auth/login",
+    "products": {
+      "create": "POST /product/create",
+      "list": "GET /product"
+    },
+    "maintenance": {
+      "create": "POST /maintenance/create",
+      "list": "GET /maintenance"
+    }
+  },
+  "context_management": {
+    "ignore_patterns": [
+      "node_modules/",
+      "dist/",
+      ".expo/",
+      "*.log",
+      "*.tmp"
+    ],
+    "focus_files": [
+      "CLAUDE.md",
+      "CONTEXT.md",
+      "package.json",
+      "app.json",
+      "types/*.ts",
+      "lib/api/*.ts"
+    ]
+  }
+}

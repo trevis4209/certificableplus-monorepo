@@ -1,0 +1,334 @@
+{
+  "description": "Dati di esempio pronti per testare il backend - Copia/Incolla",
+  "api_url": "http://localhost:3000",
+  "jwt_token_placeholder": "your-jwt-token-here",
+
+  "products": [
+    {
+      "name": "Segnale Pericolo - Lavori in Corso (Milano)",
+      "data": {
+        "qr_code": "CERT-2024-MI-001",
+        "signal_type": "Pericolo - Lavori in corso",
+        "production_year": 2024,
+        "shape": "Triangolare",
+        "dimension": "90x90cm",
+        "wl_code": "WL-A12",
+        "support_material": "Alluminio spessore 25/10",
+        "support_thickness": "2.5mm",
+        "fixation_class": "Classe RA2",
+        "fixation_method": "Palo sostegno diametro 60mm",
+        "created_by": "754ef7c0-78f6-4f2a-b6b1-1ae11b042bbd"
+      },
+      "curl": "curl -X POST 'http://localhost:3000/product/create' -H 'Authorization: Bearer YOUR_TOKEN' -H 'Content-Type: application/json' -d '{\"qr_code\":\"CERT-2024-MI-001\",\"signal_type\":\"Pericolo - Lavori in corso\",\"production_year\":2024,\"shape\":\"Triangolare\",\"dimension\":\"90x90cm\",\"wl_code\":\"WL-A12\",\"support_material\":\"Alluminio spessore 25/10\",\"support_thickness\":\"2.5mm\",\"fixation_class\":\"Classe RA2\",\"fixation_method\":\"Palo sostegno diametro 60mm\",\"created_by\":\"754ef7c0-78f6-4f2a-b6b1-1ae11b042bbd\"}'"
+    },
+    {
+      "name": "Segnale Obbligo - Casco Protettivo (Roma)",
+      "data": {
+        "qr_code": "CERT-2024-RM-002",
+        "signal_type": "Obbligo - Casco protettivo obbligatorio",
+        "production_year": 2023,
+        "shape": "Circolare",
+        "dimension": "60x60cm",
+        "wl_code": "WL-B34",
+        "support_material": "Alluminio spessore 15/10",
+        "support_thickness": "1.5mm",
+        "fixation_class": "Classe RA1",
+        "fixation_method": "Fissaggio a parete con tasselli",
+        "created_by": "754ef7c0-78f6-4f2a-b6b1-1ae11b042bbd"
+      }
+    },
+    {
+      "name": "Segnale Divieto - Accesso Vietato (Torino)",
+      "data": {
+        "qr_code": "CERT-2024-TO-003",
+        "signal_type": "Divieto - Divieto di accesso",
+        "production_year": 2024,
+        "shape": "Circolare",
+        "dimension": "45x45cm",
+        "wl_code": "WL-C56",
+        "support_material": "PVC rigido",
+        "support_thickness": "3mm",
+        "fixation_class": "Classe EG",
+        "fixation_method": "Adesivo permanente",
+        "created_by": "754ef7c0-78f6-4f2a-b6b1-1ae11b042bbd"
+      }
+    },
+    {
+      "name": "Segnale Pericolo - Alta Tensione (Bologna)",
+      "data": {
+        "qr_code": "CERT-2024-BO-004",
+        "signal_type": "Pericolo - Pericolo di tensione elettrica",
+        "production_year": 2024,
+        "shape": "Triangolare",
+        "dimension": "30x30cm",
+        "wl_code": "WL-D78",
+        "support_material": "Alluminio spessore 10/10",
+        "support_thickness": "1mm",
+        "fixation_class": "Classe RA1",
+        "fixation_method": "Adesivo rimovibile",
+        "created_by": "754ef7c0-78f6-4f2a-b6b1-1ae11b042bbd"
+      }
+    },
+    {
+      "name": "Segnale Indicazione - Uscita di Emergenza (Napoli)",
+      "data": {
+        "qr_code": "CERT-2024-NA-005",
+        "signal_type": "Indicazione - Uscita di emergenza",
+        "production_year": 2023,
+        "shape": "Rettangolare",
+        "dimension": "30x15cm",
+        "wl_code": "WL-E90",
+        "support_material": "Materiale fotoluminescente",
+        "support_thickness": "2mm",
+        "fixation_class": "Classe C",
+        "fixation_method": "Viti e distanziali",
+        "created_by": "754ef7c0-78f6-4f2a-b6b1-1ae11b042bbd"
+      }
+    }
+  ],
+
+  "maintenances": [
+    {
+      "name": "Installazione - Milano Via Roma",
+      "description": "Nuova installazione presso cantiere edile Via Roma 123",
+      "data": {
+        "intervention_type": "installazione",
+        "gps_lat": 45.464211,
+        "gps_lng": 9.189982,
+        "year": 2024,
+        "poles_number": 2,
+        "company_id": "c891f3d0-45a1-4b2c-9d7e-8f123abc4567",
+        "certificate_number": "CERT-INST-2024-001",
+        "reason": "Nuova installazione cantiere edile",
+        "notes": "Installato presso Via Roma 123, Milano. Doppio palo di sostegno h=2.5m. Verifica stabilità effettuata. Terreno: calcestruzzo.",
+        "product_uuid": "PRODUCT_UUID_HERE"
+      },
+      "curl": "curl -X POST 'http://localhost:3000/maintenance/create' -H 'Authorization: Bearer YOUR_TOKEN' -H 'Content-Type: application/json' -d '{\"intervention_type\":\"installazione\",\"gps_lat\":45.464211,\"gps_lng\":9.189982,\"year\":2024,\"poles_number\":2,\"company_id\":\"c891f3d0-45a1-4b2c-9d7e-8f123abc4567\",\"certificate_number\":\"CERT-INST-2024-001\",\"reason\":\"Nuova installazione cantiere edile\",\"notes\":\"Installato presso Via Roma 123, Milano.\",\"product_uuid\":\"PRODUCT_UUID_HERE\"}'"
+    },
+    {
+      "name": "Manutenzione - Roma Piazza Navona",
+      "description": "Manutenzione ordinaria semestrale",
+      "data": {
+        "intervention_type": "manutenzione",
+        "gps_lat": 41.902783,
+        "gps_lng": 12.496366,
+        "year": 2024,
+        "poles_number": 1,
+        "company_id": "c891f3d0-45a1-4b2c-9d7e-8f123abc4567",
+        "certificate_number": "CERT-MAINT-2024-042",
+        "reason": "Manutenzione ordinaria semestrale",
+        "notes": "Pulizia segnale con detergente neutro. Verifica retroriflettenza con retroriflettometro: 150 cd/lux/m². Controllo fissaggi: tutti stretti. Stato generale: buono.",
+        "product_uuid": "PRODUCT_UUID_HERE"
+      }
+    },
+    {
+      "name": "Sostituzione - Torino Corso Francia",
+      "description": "Sostituzione per danneggiamento da vandalismo",
+      "data": {
+        "intervention_type": "sostituzione",
+        "gps_lat": 45.070312,
+        "gps_lng": 7.686856,
+        "year": 2024,
+        "poles_number": 1,
+        "company_id": "c891f3d0-45a1-4b2c-9d7e-8f123abc4567",
+        "certificate_number": "CERT-REPL-2024-015",
+        "reason": "Segnale danneggiato da vandalismo",
+        "notes": "Segnale precedente rimosso (graffiti e graffi profondi). Sostituito con nuovo segnale stesso modello. Palo riutilizzato dopo pulizia. Documentazione fotografica: 3 foto pre/post intervento.",
+        "product_uuid": "PRODUCT_UUID_HERE"
+      }
+    },
+    {
+      "name": "Verifica - Bologna Via Indipendenza",
+      "description": "Verifica periodica trimestrale",
+      "data": {
+        "intervention_type": "verifica",
+        "gps_lat": 44.494887,
+        "gps_lng": 11.342616,
+        "year": 2024,
+        "poles_number": 1,
+        "company_id": "c891f3d0-45a1-4b2c-9d7e-8f123abc4567",
+        "certificate_number": "CERT-VER-2024-089",
+        "reason": "Verifica periodica trimestrale",
+        "notes": "Ispezione visiva: nessun danno rilevato. Retroriflettenza: conforme classe RA2. Fissaggi: corretti. Verticalità: conforme. Posizione: corretta secondo planimetria.",
+        "product_uuid": "PRODUCT_UUID_HERE"
+      }
+    },
+    {
+      "name": "Dismissione - Napoli Via Toledo",
+      "description": "Rimozione definitiva per fine lavori",
+      "data": {
+        "intervention_type": "dismissione",
+        "gps_lat": 40.839983,
+        "gps_lng": 14.249008,
+        "year": 2024,
+        "poles_number": 1,
+        "company_id": "c891f3d0-45a1-4b2c-9d7e-8f123abc4567",
+        "certificate_number": "CERT-DISM-2024-023",
+        "reason": "Fine lavori stradali - rimozione segnaletica temporanea",
+        "notes": "Segnale rimosso e stoccato in magazzino aziendale. Palo smontato. Area ripristinata e pulita. Segnale recuperabile per futuri utilizzi.",
+        "product_uuid": "PRODUCT_UUID_HERE"
+      }
+    }
+  ],
+
+  "gps_coordinates": {
+    "valid": [
+      {
+        "location": "Milano - Duomo",
+        "lat": 45.464211,
+        "lng": 9.189982,
+        "digits": "lat: 8, lng: 7"
+      },
+      {
+        "location": "Roma - Colosseo",
+        "lat": 41.890251,
+        "lng": 12.492373,
+        "digits": "lat: 8, lng: 8"
+      },
+      {
+        "location": "Torino - Mole Antonelliana",
+        "lat": 45.070312,
+        "lng": 7.686856,
+        "digits": "lat: 8, lng: 7"
+      },
+      {
+        "location": "Bologna - Piazza Maggiore",
+        "lat": 44.494887,
+        "lng": 11.342616,
+        "digits": "lat: 8, lng: 8"
+      },
+      {
+        "location": "Napoli - Vesuvio",
+        "lat": 40.821666,
+        "lng": 14.426018,
+        "digits": "lat: 8, lng: 8"
+      },
+      {
+        "location": "Limite massimo (9 digits)",
+        "lat": 123.456789,
+        "lng": -98.765432,
+        "digits": "lat: 9, lng: 9"
+      }
+    ],
+    "invalid": [
+      {
+        "description": "Troppi digit totali (10)",
+        "lat": 1234.567890,
+        "lng": 9.189982,
+        "reason": "lat ha 10 digits, max consentito 9"
+      },
+      {
+        "description": "Latitudine fuori range",
+        "lat": 91.464211,
+        "lng": 9.189982,
+        "reason": "lat > 90 (range: -90 a 90)"
+      },
+      {
+        "description": "Longitudine fuori range",
+        "lat": 45.464211,
+        "lng": 181.189982,
+        "reason": "lng > 180 (range: -180 a 180)"
+      }
+    ]
+  },
+
+  "expected_responses": {
+    "product_create_success": {
+      "status_code": 200,
+      "message": "Product Successfully Created and Tokenized.",
+      "payload": {
+        "data": {
+          "uuid": "8f7e9d2a-3c4b-4a1e-9f8d-7c6b5a4e3d2c",
+          "signal_type": "Pericolo - Lavori in corso",
+          "asset_id": 123456789,
+          "metadata_cid": "QmX5ZzPxvxhwYnN3aR8dKjT9qLmP2sW4vB6cN7eM8fG1hJ"
+        }
+      }
+    },
+    "maintenance_create_success": {
+      "status_code": 200,
+      "message": "Maintenance Successfully created.",
+      "payload": {
+        "data": {
+          "uuid": "3b4c5d6e-7f8a-9b0c-1d2e-3f4a5b6c7d8e",
+          "intervention_type": "installazione",
+          "asset_id": 123456789,
+          "metadata_cid": "QmY6AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUu",
+          "transaction_id": "ALGO-TX-ABC123DEF456GHI789"
+        }
+      }
+    },
+    "duplicate_qr_error": {
+      "status_code": 400,
+      "message": "Product with this SHA-256 already exists",
+      "payload": {
+        "data": null
+      }
+    },
+    "product_not_found_error": {
+      "status_code": 400,
+      "message": "Product not found with UUID: non-existent-uuid-999",
+      "payload": {
+        "data": null
+      }
+    },
+    "invalid_gps_error": {
+      "status_code": 400,
+      "message": "Invalid GPS coordinates: gps_lat exceeds 9 total digits (6 decimals max)",
+      "payload": {
+        "data": null
+      }
+    },
+    "unauthorized_error": {
+      "status_code": 401,
+      "message": "Token expired or invalid",
+      "payload": {
+        "data": null
+      }
+    }
+  },
+
+  "test_scenarios": {
+    "scenario_1_complete_flow": {
+      "name": "Flusso Completo: Crea Prodotto → Crea Manutenzione",
+      "steps": [
+        "1. POST /product/create con dati 'Segnale Pericolo - Milano'",
+        "2. Salvare uuid dalla risposta",
+        "3. POST /maintenance/create usando uuid del prodotto",
+        "4. Verificare transaction_id nella risposta",
+        "5. GET /product per vedere il prodotto nell'elenco",
+        "6. GET /maintenance per vedere la manutenzione nell'elenco"
+      ]
+    },
+    "scenario_2_duplicate_test": {
+      "name": "Test Duplicato: Stesso QR Code due volte",
+      "steps": [
+        "1. POST /product/create con qr_code='DUPLICATE-TEST'",
+        "2. Verificare success (200)",
+        "3. POST /product/create con stesso qr_code='DUPLICATE-TEST'",
+        "4. Verificare errore 400 'SHA-256 already exists'"
+      ]
+    },
+    "scenario_3_gps_validation": {
+      "name": "Test GPS Validation",
+      "steps": [
+        "1. POST /maintenance/create con GPS valido (45.464211, 9.189982)",
+        "2. Verificare success (200)",
+        "3. POST /maintenance/create con GPS invalido (1234.567890, 9.189982)",
+        "4. Verificare errore 400 GPS validation"
+      ]
+    }
+  },
+
+  "quick_copy_paste": {
+    "description": "Comandi pronti per copy/paste nel terminale",
+    "setup": [
+      "export API_URL='http://localhost:3000'",
+      "export JWT_TOKEN='your-jwt-token-here'"
+    ],
+    "create_product": "curl -X POST \"$API_URL/product/create\" -H \"Authorization: Bearer $JWT_TOKEN\" -H \"Content-Type: application/json\" -d '{\"qr_code\":\"TEST-001\",\"signal_type\":\"Pericolo - Test\",\"production_year\":2024,\"shape\":\"Triangolare\",\"dimension\":\"90x90cm\",\"wl_code\":\"WL-TEST\",\"support_material\":\"Alluminio\",\"support_thickness\":\"2.5mm\",\"fixation_class\":\"Classe RA2\",\"fixation_method\":\"Palo sostegno\",\"created_by\":\"test-user-id\"}'",
+    "get_products": "curl -X GET \"$API_URL/product\" -H \"Authorization: Bearer $JWT_TOKEN\"",
+    "create_maintenance": "curl -X POST \"$API_URL/maintenance/create\" -H \"Authorization: Bearer $JWT_TOKEN\" -H \"Content-Type: application/json\" -d '{\"intervention_type\":\"installazione\",\"gps_lat\":45.464211,\"gps_lng\":9.189982,\"year\":2024,\"poles_number\":2,\"company_id\":\"test-company\",\"certificate_number\":\"CERT-001\",\"reason\":\"Test\",\"notes\":\"Test maintenance\",\"product_uuid\":\"PRODUCT_UUID_HERE\"}'",
+    "get_maintenances": "curl -X GET \"$API_URL/maintenance\" -H \"Authorization: Bearer $JWT_TOKEN\""
+  }
+}

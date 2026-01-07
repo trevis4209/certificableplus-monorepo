@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; }
+    #map { height: 100vh; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    console.log('Starting map initialization...');
+    
+    // Test data
+    const testMarkers = [
+      {
+        id: "product-1",
+        name: "Test Signal - WL001",
+        type: "Segnale di pericolo",
+        coordinate: { latitude: 45.4642, longitude: 9.1900 },
+        status: "ok",
+        qr_code: "QR001"
+      },
+      {
+        id: "product-2", 
+        name: "Test Signal - WL002",
+        type: "Segnale di obbligo",
+        coordinate: { latitude: 45.4700, longitude: 9.1950 },
+        status: "check",
+        qr_code: "QR002"
+      }
+    ];
+
+    try {
+      // Initialize map
+      console.log('Creating map...');
+      const map = L.map('map').setView([45.4642, 9.1900], 10);
+      
+      // Add tile layer
+      console.log('Adding tile layer...');
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18
+      }).addTo(map);
+
+      console.log('Map initialized successfully');
+
+      // Add markers
+      testMarkers.forEach((marker, index) => {
+        console.log(`Adding marker ${index + 1}:`, marker);
+        
+        const color = marker.status === 'ok' ? '#10B981' : 
+                     marker.status === 'check' ? '#F59E0B' : '#EF4444';
+        const icon = marker.status === 'ok' ? '✓' : 
+                    marker.status === 'check' ? '⚠' : '✗';
+        
+        const leafletMarker = L.marker([marker.coordinate.latitude, marker.coordinate.longitude], {
+          icon: L.divIcon({
+            html: `<div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">${icon}</div>`,
+            className: 'signal-icon',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+          })
+        })
+        .bindPopup(`
+          <div style="padding: 8px; min-width: 200px;">
+            <h4 style="margin: 0 0 8px 0; color: #1F2937;">${marker.name}</h4>
+            <p style="margin: 4px 0; color: #6B7280; font-size: 14px;">${marker.type}</p>
+            <p style="margin: 4px 0; color: #6B7280; font-size: 12px;">QR: ${marker.qr_code}</p>
+          </div>
+        `)
+        .addTo(map);
+        
+        console.log(`Marker ${index + 1} added successfully`);
+      });
+
+      console.log('All markers added successfully');
+
+    } catch (error) {
+      console.error('Error initializing map:', error);
+      document.body.innerHTML = `<div style="padding: 20px; color: red;">Error: ${error.message}</div>`;
+    }
+  </script>
+</body>
+</html>

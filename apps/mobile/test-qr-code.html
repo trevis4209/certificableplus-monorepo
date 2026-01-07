@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test QR Code - CertPlus</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f9fafb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            color: #6b7280;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .qr-section {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .qr-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .qr-current {
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: #f3f4f6;
+            color: #374151;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .qr-container {
+            background: #f9fafb;
+            border: 2px dashed #d1d5db;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #qrcode-container {
+            width: 280px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            background: white;
+        }
+
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .qr-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .qr-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .qr-btn:hover {
+            border-color: #d1d5db;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .qr-btn.active {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .qr-btn-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .qr-btn-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .qr-btn-content p {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .maintenance { background: #10b981; }
+        .view { background: #3b82f6; }
+        .create { background: #f59e0b; }
+
+        .instructions {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .instructions ol {
+            padding-left: 1.5rem;
+            color: #6b7280;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        .instructions strong {
+            color: #374151;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .qr-section {
+                padding: 1.5rem;
+            }
+
+            #qrcode-container {
+                width: 240px;
+                height: 240px;
+            }
+
+            .qr-btn {
+                padding: 1rem;
+            }
+
+            .qr-btn-icon {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.75rem;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .qr-section {
+                padding: 1rem;
+            }
+
+            #qrcode-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .qr-btn {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Test QR Scanner</h1>
+            <p>Testa le 3 funzionalità principali di CertPlus</p>
+        </div>
+
+        <div class="main-grid">
+            <!-- QR Code Section -->
+            <div class="qr-section">
+                <h2 class="qr-title">QR Code Attuale</h2>
+                <div class="qr-current" id="currentQR">QR001</div>
+
+                <div class="qr-container">
+                    <div id="qrcode-container">
+                        <!-- QR code verrà inserito qui -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="controls-section">
+                <div class="qr-buttons">
+                    <button class="qr-btn active" onclick="generateQR('QR001')">
+                        <div class="qr-btn-icon maintenance">🔧</div>
+                        <div class="qr-btn-content">
+                            <h3>Aggiungi Manutenzione</h3>
+                            <p>Scansiona QR001 per aggiungere interventi</p>
+                        </div>
+                    </button>
+
+                    <button class="qr-btn" onclick="generateQR('QR002')">
+                        <div class="qr-btn-icon view">👁️</div>
+                        <div class="qr-btn-content">
+                            <h3>Visualizza Dati</h3>
+                            <p>Scansiona QR002 per vedere dettagli prodotto</p>
+                        </div>
+                    </button>
+
+                    <button class="qr-btn" onclick="generateQR('NEW001')">
+                        <div class="qr-btn-icon create">➕</div>
+                        <div class="qr-btn-content">
+                            <h3>Crea Prodotto</h3>
+                            <p>Scansiona NEW001 per registrare nuovo prodotto</p>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="instructions">
+                    <h3>📱 Come testare</h3>
+                    <ol>
+                        <li><strong>Dashboard:</strong> Clicca un'azione rapida</li>
+                        <li><strong>Scanner:</strong> Scansiona il QR code sopra</li>
+                        <li><strong>Verifica:</strong> Osserva il comportamento dell'app</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const testData = {
+            'QR001': {
+                name: 'Segnale di pericolo - Test Manutenzione',
+                status: 'installed',
+                type: 'Triangolare'
+            },
+            'QR002': {
+                name: 'Cartello informativo - Test Visualizzazione',
+                status: 'installed',
+                type: 'Rettangolare'
+            },
+            'NEW001': {
+                name: 'Nuovo Prodotto - Test Creazione',
+                status: 'new',
+                type: 'Da creare'
+            }
+        };
+
+        function generateQR(qrCode) {
+            // Aggiorna il QR code corrente
+            document.getElementById('currentQR').textContent = qrCode;
+
+            // Rimuovi classe active da tutti i bottoni
+            document.querySelectorAll('.qr-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Aggiungi classe active al bottone cliccato
+            if (typeof event !== 'undefined' && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+
+            const container = document.getElementById('qrcode-container');
+            if (!container) return;
+
+            // Pulisci il contenuto precedente
+            container.innerHTML = '';
+
+            // Crea l'immagine del QR code
+            const img = document.createElement('img');
+            img.src = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=${encodeURIComponent(qrCode)}&margin=10`;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.borderRadius = '0.5rem';
+            img.alt = `QR Code: ${qrCode}`;
+
+            // Gestisci errori di caricamento
+            img.onerror = function() {
+                container.innerHTML = `
+                    <div style="
+                        border: 2px solid #374151;
+                        padding: 1rem;
+                        font-family: monospace;
+                        font-size: 1rem;
+                        background: white;
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 0.5rem;
+                        text-align: center;
+                        word-break: break-all;
+                    ">
+                        QR: ${qrCode}
+                    </div>
+                `;
+            };
+
+            // Aggiungi l'immagine al container
+            container.appendChild(img);
+        }
+
+        // Genera il QR code iniziale quando la pagina si carica
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                generateQR('QR001');
+            }, 300);
+        });
+    </script>
+</body>
+</html>
