@@ -69,6 +69,7 @@ modals/
     await backendAPI.createProduct(apiRequest);
   }}
   mode="add"
+  productToEdit={product}  // ✅ Passa Product da @certplus/types (campi italiani)
 />
 ```
 
@@ -76,7 +77,14 @@ modals/
 - Step wizard (2 passi): Tipologia → Dettagli
 - Auto-generazione QR code con timestamp
 - Validazione campi obbligatori real-time
-- Support per edit mode con pre-popolamento dati
+- ✅ **Edit mode con pre-popolamento**: Mappa automaticamente campi italiani (ProductType) → campi inglesi (form)
+- ✅ **Type-safe**: Usa Product type da `@certplus/types` invece di interface locale
+
+**Recent Fix** (7 gennaio 2026):
+- ✅ Fixed: Modal vuoto in edit mode per mismatch interfacce
+- ✅ Importato ProductType da `@certplus/types` per type safety
+- ✅ Aggiunto mapping IT→EN nel useEffect (tipologia_segnale→signal_type, forma→shape, etc.)
+- ✅ Rimossa interfaccia Product locale duplicata
 
 ---
 

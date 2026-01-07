@@ -4,6 +4,7 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Modal, Image, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { ProductViewerProps } from '../../types/scanner';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -13,9 +14,18 @@ const ProductViewModal: React.FC<ProductViewerProps> = React.memo(({
   product,
   onClose,
 }) => {
+  const router = useRouter();
+
   if (!product) {
     return null;
   }
+
+  const handleNavigateToProduct = () => {
+    // Chiudi il modal prima di navigare
+    onClose();
+    // Naviga alla pagina di dettaglio del prodotto
+    router.push(`/pages/product/${product.id}`);
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -98,9 +108,9 @@ const ProductViewModal: React.FC<ProductViewerProps> = React.memo(({
                   <Text className="text-sm font-semibold text-gray-900 font-mono">{product.qr_code}</Text>
                 </View>
                 <View className="flex-row justify-between">
-                  <Text className="text-sm text-gray-600">Tipo:</Text>
-                  <Text className="text-sm font-semibold text-gray-900 flex-1 text-right" numberOfLines={1}>
-                    {product.tipo_segnale}
+                  <Text className="text-sm text-gray-600">Categoria:</Text>
+                  <Text className="text-sm font-semibold text-gray-900 capitalize">
+                    {product.tipologia_segnale}
                   </Text>
                 </View>
                 <View className="flex-row justify-between">
@@ -193,14 +203,14 @@ const ProductViewModal: React.FC<ProductViewerProps> = React.memo(({
                       <Ionicons name="color-palette-outline" size={16} color="#6B7280" />
                       <Text className="text-gray-600 font-medium ml-2">Pellicola:</Text>
                     </View>
-                    <Text className="text-orange-800 font-semibold">{product.materiale_pellicola}</Text>
+                    <Text className="text-orange-800 font-semibold">{product.materiale_pellicola || 'N/A'}</Text>
                   </View>
                   <View className="flex-row justify-between items-center">
                     <View className="flex-row items-center">
                       <Ionicons name="construct-outline" size={16} color="#6B7280" />
                       <Text className="text-gray-600 font-medium ml-2">Fissaggio:</Text>
                     </View>
-                    <Text className="text-orange-800 font-semibold">{product.fissaggio}</Text>
+                    <Text className="text-orange-800 font-semibold">{product.fissaggio || 'N/A'}</Text>
                   </View>
                 </View>
               </View>
@@ -361,12 +371,12 @@ const ProductViewModal: React.FC<ProductViewerProps> = React.memo(({
           <View className="p-5 border-t border-gray-200 bg-white">
             <TouchableOpacity
               className="bg-blue-500 p-4 rounded-xl flex-row items-center justify-center"
-              onPress={onClose}
+              onPress={handleNavigateToProduct}
               activeOpacity={0.7}
             >
-              <Ionicons name="checkmark-circle" size={20} color="white" />
+              <Ionicons name="arrow-forward-circle" size={20} color="white" />
               <Text className="text-white font-semibold text-base ml-2">
-                Ho capito
+                Vedi Dettagli
               </Text>
             </TouchableOpacity>
           </View>

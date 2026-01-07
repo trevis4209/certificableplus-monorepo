@@ -536,7 +536,7 @@ function ProductDetailContent() {
                         </div>
                         <div>
                           <p className="text-sm text-muted-foreground">Materiale Pellicola</p>
-                          <p className="font-semibold">{product.materiale_pellicola}</p>
+                          <p className="font-semibold">{product.materiale_pellicola || 'N/A'}</p>
                         </div>
                         <div>
                           <p className="text-sm text-muted-foreground">Spessore Supporto</p>
@@ -544,7 +544,7 @@ function ProductDetailContent() {
                         </div>
                         <div>
                           <p className="text-sm text-muted-foreground">Sistema Fissaggio</p>
-                          <p className="font-semibold">{product.fissaggio}</p>
+                          <p className="font-semibold">{product.fissaggio || 'N/A'}</p>
                         </div>
                       </div>
                     </div>
@@ -906,10 +906,50 @@ function ProductDetailContent() {
             onClose={() => setShowEditModal(false)}
             productToEdit={product}
             mode="edit"
-            onSubmit={(data: any) => {
-              console.log('Update product:', data);
-              setShowEditModal(false);
-              // In produzione: aggiornamento dati
+            onSubmit={async (data: any) => {
+              try {
+                setIsSubmitting(true);
+
+                // Call PUT API endpoint with product id + update data
+                const response = await fetch('/api/products', {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    id: product.id,
+                    ...data
+                  })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                  toast({
+                    variant: "success",
+                    title: "Prodotto aggiornato con successo",
+                    description: "Le modifiche sono state salvate correttamente"
+                  });
+                  setShowEditModal(false);
+                  // Reload page to show updated data
+                  window.location.reload();
+                } else {
+                  toast({
+                    variant: "destructive",
+                    title: "Errore durante l'aggiornamento",
+                    description: result.message || "Riprova più tardi"
+                  });
+                }
+              } catch (error) {
+                console.error('Update error:', error);
+                toast({
+                  variant: "destructive",
+                  title: "Errore di rete",
+                  description: "Impossibile connettersi al server"
+                });
+              } finally {
+                setIsSubmitting(false);
+              }
             }}
           />
         </Suspense>

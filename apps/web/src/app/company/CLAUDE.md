@@ -581,6 +581,37 @@ const citiesData = useMemo(() => {
 - Mock data limitata solo a dipendenti come richiesto
 - **TODO Production**: Aggiungere auth middleware e filtro per authenticated user's companyId
 
+### Product Detail Page - Empty Fields Fix
+**Data**: 7 gennaio 2026
+**Modifiche**:
+- ✅ **materiale_pellicola Fallback**: Aggiunto placeholder "N/A" quando campo vuoto
+- ✅ **fissaggio Fallback**: Aggiunto placeholder "N/A" per consistenza
+- ✅ **API Data Compatibility**: Fix per campi non forniti dall'API esterna
+
+**Problema Risolto**:
+```typescript
+// PRIMA (campo vuoto quando dati dall'API)
+<p className="font-semibold">{product.materiale_pellicola}</p>
+
+// DOPO (mostra "N/A" se vuoto)
+<p className="font-semibold">{product.materiale_pellicola || 'N/A'}</p>
+```
+
+**Root Cause**:
+- L'API esterna non fornisce il campo `materiale_pellicola`
+- Il mapping (`api-mapping.ts:99`) lo setta a stringa vuota
+- Mock data funzionano perfettamente (hanno valori validi)
+- La pagina dettaglio mostrava il label ma nessun valore
+
+**Impatto**:
+- Tab "Informazioni" ora mostra "N/A" per campi non disponibili
+- UX migliorata: utente capisce che il dato non è disponibile (vs campo vuoto confuso)
+- Consistenza con pattern UI/UX per campi opzionali
+- Fix applicato anche a `fissaggio` per prevenire stesso problema
+
+**Files Modified**:
+- `src/app/company/products/[product]/page.tsx`: Righe 539, 547 (fallback "N/A")
+
 ---
 
 La sezione Company rappresenta il **cuore gestionale** dell'applicazione, con focus su usabilità desktop e performance ottimizzate.

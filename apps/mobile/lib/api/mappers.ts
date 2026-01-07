@@ -69,9 +69,18 @@ export function mapProductDataToProduct(
     console.log(`⚠️ [MAPPER] Product ${data.uuid.substring(0, 8)} has NO maintenances - will not appear on map`);
   }
 
+  // Normalize signal_type (permanent/temporary → permanente/temporanea)
+  const normalizeSignalType = (type: string): 'permanente' | 'temporanea' => {
+    if (type === 'permanent') return 'permanente';
+    if (type === 'temporary') return 'temporanea';
+    return type as 'permanente' | 'temporanea';
+  };
+
   return {
     id: data.uuid,
-    tipo_segnale: data.signal_type,
+    // Map BOTH fields separately (aligns with @certplus/types Product interface)
+    tipologia_segnale: normalizeSignalType(data.signal_type),  // Category: "permanente"/"temporanea"
+    tipo_segnale: data.signal_category || data.signal_type,    // Description: "Modello. 1/a 50 metri." or fallback
     anno: data.production_year,
     forma: data.shape,
     materiale_supporto: data.support_material,
@@ -202,9 +211,18 @@ export function mapProductCreateResponseToProduct(
   request: ProductCreateRequest,
   companyId: string
 ): Partial<Product> {
+  // Normalize signal_type (permanent/temporary → permanente/temporanea)
+  const normalizeSignalType = (type: string): 'permanente' | 'temporanea' => {
+    if (type === 'permanent') return 'permanente';
+    if (type === 'temporary') return 'temporanea';
+    return type as 'permanente' | 'temporanea';
+  };
+
   return {
     id: response.uuid,
-    tipo_segnale: response.signal_type,
+    // Map BOTH fields separately (aligns with @certplus/types Product interface)
+    tipologia_segnale: normalizeSignalType(request.signal_type),  // Category: "permanente"/"temporanea"
+    tipo_segnale: request.signal_category || request.signal_type, // Description: "Modello. 1/a 50 metri." or fallback
     anno: request.production_year,
     forma: request.shape,
     materiale_supporto: request.support_material,

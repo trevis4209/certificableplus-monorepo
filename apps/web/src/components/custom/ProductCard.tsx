@@ -1,33 +1,34 @@
 /**
  * ProductCard Component - Card visualizzazione segnali
- * 
+ *
  * Card responsive per visualizzazione prodotti/segnali stradali:
- * 
+ *
  * **Responsive Layout:**
  * - Desktop: 4 colonne (grid-cols-4)
- * - Tablet: 3 colonne (md:grid-cols-3) 
+ * - Tablet: 3 colonne (md:grid-cols-3)
  * - Mobile: 2 colonne (grid-cols-2)
- * 
+ *
  * **Card Features:**
  * - Icona segnale specifica per tipo e forma
  * - Badge status manutenzione
- * - Informazioni tecniche essenziali
+ * - Descrizione dettagliata tipo segnale (tipo_segnale field)
+ * - Informazioni tecniche essenziali (supporto, pellicola, fissaggio)
  * - Quick actions (QR modal, view, maintenance)
  * - QR Code modal integrato con download/sharing
  * - Hover effects e animazioni
  * - Click handler per dettagli completi
- * 
+ *
  * **Design System:**
  * - Consistent con shadcn/ui theme
  * - Support per dark mode
  * - Touch-optimized per mobile
  * - Loading skeleton states
- * 
+ *
  * **Performance:**
  * - React.memo per ottimizzazione re-renders
  * - Icone SVG ottimizzate
  * - Optimized click handlers
- * 
+ *
  * **TODO:** Virtual scrolling per liste grandi, infinite scroll
  */
 
@@ -383,6 +384,12 @@ const ProductCard = memo(function ProductCard({
 
           {/* Dettagli tecnici compatti */}
           <div className="space-y-1.5 text-xs bg-muted/20 rounded-lg p-2.5 border border-muted/30">
+            {/* Tipo Segnale - Descrizione dettagliata del modello */}
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground font-medium">Tipo Segnale:</span>
+              <span className="font-medium truncate ml-2">{product.tipo_segnale}</span>
+            </div>
+
             {/* WL Code - Importante per identificazione */}
             {product.wl && (
               <div className="flex items-center justify-between">

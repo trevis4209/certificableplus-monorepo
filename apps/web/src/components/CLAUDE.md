@@ -302,3 +302,24 @@ import { ProductModal } from "@/components/modals/ProductModal";
 - className prop per customizzazione
 - forwardRef per componenti UI base
 - onAction callbacks con useCallback
+
+## 📝 Recent Updates
+
+### ProductCard Enhancement - Display tipo_segnale Field
+**Data**: 7 gennaio 2026
+**Modifiche**:
+- ✅ **tipo_segnale Display**: Aggiunta visualizzazione descrizione dettagliata modello nella sezione "Dettagli tecnici compatti"
+- ✅ **Layout Tecnico**: tipo_segnale come primo elemento del box grigio specifiche tecniche
+- ✅ **materiale_pellicola**: Già presente nella stessa sezione tecnica (nessuna modifica)
+- ✅ **CardDescription**: Ripristinata a layout originale (forma • dimensioni)
+- ✅ **JSDoc Updates**: Aggiornati commenti per riflettere nuova feature
+
+**Impatto**:
+- Utenti vedono ora "Tipo Segnale" come prima info tecnica nel box grigio
+- Ordine sezione tecnica: Tipo Segnale → WL Code → Supporto → Pellicola → Fissaggio → Anno
+- Informazioni concentrate in un'unica area visiva (box grigio con bordo)
+- Nessun breaking change, solo additive UI enhancement
+- Backend già supportava il campo, era solo mancante in UI
+
+**File modificati**:
+- `src/components/custom/ProductCard.tsx`: Righe 385-391 (dettagli tecnici compatti)

@@ -250,7 +250,7 @@ export default function ProductDetailPage() {
                     <Ionicons name="color-palette-outline" size={16} color="#6B7280" />
                     <Text className="text-gray-600 font-medium ml-2">Materiale Pellicola</Text>
                   </View>
-                  <Text className="text-gray-800">{product.materiale_pellicola}</Text>
+                  <Text className="text-gray-800">{product.materiale_pellicola || 'N/A'}</Text>
                 </View>
                 
                 {installationDate && (

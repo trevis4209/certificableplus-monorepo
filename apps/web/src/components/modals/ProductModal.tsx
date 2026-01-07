@@ -10,12 +10,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Package, Upload, Construction, Clock, Shield, ChevronLeft, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import type { Product as ProductType } from "@certplus/types";
 
 interface ProductModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit?: (productData: ProductApiPayload) => void;
-  productToEdit?: Product | null;
+  productToEdit?: ProductType | null;  // Usa Product da @certplus/types
   mode?: 'add' | 'edit';
 }
 
@@ -35,22 +36,8 @@ interface ProductApiPayload {
   created_by: string;
 }
 
-interface Product {
-  id?: string;
-  qr_code?: string;
-  signal_type: 'permanent' | 'temporary'; // Signal type
-  signal_category?: string;               // Descriptive category
-  production_year: number;
-  shape: string;
-  dimension?: string;
-  support_material?: string;
-  support_thickness?: number;
-  wl_code?: string;
-  fixation_class?: string;
-  image?: string;
-  fixation_method?: string;
-  created_by?: string;
-}
+// Note: ProductType viene da @certplus/types (campi italiani)
+// Il form usa campi inglesi per l'API, quindi mappiamo IT→EN nel useEffect
 
 interface ProductFormData {
   qr_code: string;
@@ -91,21 +78,28 @@ export const ProductModal = memo(function ProductModal({ isOpen, onClose, onSubm
   });
 
   // Effetto per popolare il form quando si modifica un prodotto esistente
+  // Mappa campi italiani (ProductType da @certplus/types) → campi inglesi (form)
   useEffect(() => {
     if (productToEdit && mode === 'edit') {
+      // Mappa tipologia_segnale IT → signal_type EN
+      const signalTypeMap: Record<string, 'permanent' | 'temporary'> = {
+        'permanente': 'permanent',
+        'temporanea': 'temporary'
+      };
+
       setFormData({
         qr_code: productToEdit.qr_code || generateQRCode(),
-        signal_type: productToEdit.signal_type || "",
-        signal_category: productToEdit.signal_category || "",
-        production_year: productToEdit.production_year?.toString() || "",
-        shape: productToEdit.shape || "",
-        dimension: productToEdit.dimension || "",
-        support_material: productToEdit.support_material || "",
-        support_thickness: productToEdit.support_thickness?.toString() || "",
-        wl_code: productToEdit.wl_code || "",
-        fixation_class: productToEdit.fixation_class || "",
-        fixation_method: productToEdit.fixation_method || "",
-        created_by: productToEdit.created_by || ""
+        signal_type: productToEdit.tipologia_segnale ? signalTypeMap[productToEdit.tipologia_segnale] || "" : "",
+        signal_category: productToEdit.tipo_segnale || "",
+        production_year: productToEdit.anno?.toString() || "",
+        shape: productToEdit.forma || "",
+        dimension: productToEdit.dimensioni || "",
+        support_material: productToEdit.materiale_supporto || "",
+        support_thickness: productToEdit.spessore_supporto?.toString() || "",
+        wl_code: productToEdit.wl || "",
+        fixation_class: productToEdit.materiale_pellicola || "",
+        fixation_method: productToEdit.fissaggio || "",
+        created_by: productToEdit.createdBy || ""
       });
       // Se stiamo modificando, vai direttamente al step 2
       setCurrentStep(2);

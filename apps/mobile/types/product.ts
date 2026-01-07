@@ -44,6 +44,7 @@ export interface ProductCreateRequest {
 export interface ProductCreateResponse {
   uuid: string;
   signal_type: string;
+  signal_category?: string;   // Optional: Detailed description returned by backend
   asset_id: number;
   metadata_cid: string;
 }
@@ -69,6 +70,7 @@ export interface ProductData {
   uuid: string;
   qr_code: string;
   signal_type: string;
+  signal_category?: string;   // Optional: Detailed description (e.g., "Modello. 1/a 50 metri.")
   production_year: number;
   shape: string;
   dimension: string;

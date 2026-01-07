@@ -13,10 +13,14 @@ export interface User {
   updatedAt: string;
 }
 
-// Product interface
+// Product interface (aligned with @certplus/types)
 export interface Product {
   id: string;
-  tipo_segnale: string;
+
+  // Signal type fields (DUAL FIELD SYSTEM)
+  tipologia_segnale: 'permanente' | 'temporanea'; // Signal category (required)
+  tipo_segnale: string;                           // Full description (e.g., "Modello. 1/a 50 metri.")
+
   anno: number;
   forma: string;
   materiale_supporto: string;
