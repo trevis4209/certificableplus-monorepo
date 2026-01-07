@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable standalone output for Docker deployments (reduces image size by 60-70%)
+  output: 'standalone',
+
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
