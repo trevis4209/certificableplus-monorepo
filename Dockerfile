@@ -39,7 +39,7 @@ RUN npm ci --omit=dev --ignore-scripts
 # ============================================
 # Stage 4: Build the application
 # ============================================
-FROM base AS builder
+FROM turbo AS builder
 WORKDIR /app
 
 # Copy installed dependencies
