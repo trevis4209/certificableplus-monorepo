@@ -1,0 +1,38 @@
+{
+  "name": "@certplus/validations",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./auth": {
+      "types": "./dist/auth.d.ts",
+      "default": "./dist/auth.js"
+    },
+    "./product": {
+      "types": "./dist/product.d.ts",
+      "default": "./dist/product.js"
+    },
+    "./maintenance": {
+      "types": "./dist/maintenance.d.ts",
+      "default": "./dist/maintenance.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "zod": "^4.0.15"
+  },
+  "devDependencies": {
+    "@certplus/config": "*",
+    "@certplus/types": "*",
+    "typescript": "^5.7.3"
+  }
+}

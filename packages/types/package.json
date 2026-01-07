@@ -1,0 +1,38 @@
+{
+  "name": "@certplus/types",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./user": {
+      "types": "./dist/user.d.ts",
+      "default": "./dist/user.js"
+    },
+    "./product": {
+      "types": "./dist/product.d.ts",
+      "default": "./dist/product.js"
+    },
+    "./maintenance": {
+      "types": "./dist/maintenance.d.ts",
+      "default": "./dist/maintenance.js"
+    },
+    "./company": {
+      "types": "./dist/company.d.ts",
+      "default": "./dist/company.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@certplus/config": "*",
+    "typescript": "^5.7.3"
+  }
+}
