@@ -220,7 +220,15 @@ export default function ProductDetailPage() {
                   </View>
                   <Text className="text-gray-800 font-mono">{product.qr_code}</Text>
                 </View>
-                
+
+                <View className="flex-row items-center justify-between py-2">
+                  <View className="flex-row items-center">
+                    <Ionicons name="pricetag-outline" size={16} color="#6B7280" />
+                    <Text className="text-gray-600 font-medium ml-2">Categoria</Text>
+                  </View>
+                  <Text className="text-gray-800 capitalize">{product.tipologia_segnale}</Text>
+                </View>
+
                 <View className="flex-row items-center justify-between py-2">
                   <View className="flex-row items-center">
                     <Ionicons name="calendar-outline" size={16} color="#6B7280" />
@@ -228,7 +236,7 @@ export default function ProductDetailPage() {
                   </View>
                   <Text className="text-gray-800">{product.anno}</Text>
                 </View>
-                
+
                 <View className="flex-row items-center justify-between py-2">
                   <View className="flex-row items-center">
                     <Ionicons name="resize-outline" size={16} color="#6B7280" />
@@ -236,7 +244,7 @@ export default function ProductDetailPage() {
                   </View>
                   <Text className="text-gray-800">{product.dimensioni}</Text>
                 </View>
-                
+
                 <View className="flex-row items-center justify-between py-2">
                   <View className="flex-row items-center">
                     <Ionicons name="layers-outline" size={16} color="#6B7280" />
@@ -244,13 +252,21 @@ export default function ProductDetailPage() {
                   </View>
                   <Text className="text-gray-800">{product.materiale_supporto}</Text>
                 </View>
-                
+
                 <View className="flex-row items-center justify-between py-2">
                   <View className="flex-row items-center">
                     <Ionicons name="color-palette-outline" size={16} color="#6B7280" />
                     <Text className="text-gray-600 font-medium ml-2">Materiale Pellicola</Text>
                   </View>
                   <Text className="text-gray-800">{product.materiale_pellicola || 'N/A'}</Text>
+                </View>
+
+                <View className="flex-row items-center justify-between py-2">
+                  <View className="flex-row items-center">
+                    <Ionicons name="construct-outline" size={16} color="#6B7280" />
+                    <Text className="text-gray-600 font-medium ml-2">Fissaggio</Text>
+                  </View>
+                  <Text className="text-gray-800">{product.fissaggio || 'N/A'}</Text>
                 </View>
                 
                 {installationDate && (

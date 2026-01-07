@@ -96,7 +96,7 @@ export function mapApiProductToProduct(apiProduct: ApiProduct): Product {
     wl: apiProduct.wl_code || '',
     materiale_supporto: apiProduct.support_material,
     spessore_supporto: parseFloat(apiProduct.support_thickness) || 0,
-    materiale_pellicola: '', // Not provided by API
+    materiale_pellicola: apiProduct.fixation_class || '', // Mapped from fixation_class
     figura: '', // Not provided by API
     fissaggio: apiProduct.fixation_method,
     // Parse GPS coordinates from product level OR fallback to first maintenance GPS
@@ -140,7 +140,7 @@ export function mapProductToApiProduct(product: Partial<Product>): Partial<ApiPr
     wl_code: product.wl,
     support_material: product.materiale_supporto || '',
     support_thickness: String(product.spessore_supporto || 0),
-    fixation_class: '', // Not used in app currently
+    fixation_class: product.materiale_pellicola || '', // Map materiale_pellicola to fixation_class
     fixation_method: product.fissaggio || '',
     created_by: product.createdBy || 'system',
   };
