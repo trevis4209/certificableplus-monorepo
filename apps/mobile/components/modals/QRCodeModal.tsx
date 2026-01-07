@@ -33,7 +33,8 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  Alert
+  Alert,
+  Pressable
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { captureRef } from 'react-native-view-shot';
@@ -133,66 +134,70 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
     });
   };
 
-  /**
-   * Format GPS coordinates with proper precision
-   */
-  const formatGPS = (coord: number | string | undefined): string => {
-    if (coord === undefined || coord === null) return 'N/A';
-    const num = typeof coord === 'string' ? parseFloat(coord) : coord;
-    return isNaN(num) ? 'N/A' : num.toFixed(6);
-  };
-
   return (
     <Modal
       visible={visible}
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       onRequestClose={onClose}
     >
-      <View className="flex-1 bg-black/50">
-        <View className="flex-1 mt-20 bg-white rounded-t-3xl shadow-2xl">
-          {/* Header */}
-          <View className="px-6 pt-6 pb-4 border-b border-gray-200 bg-gray-50">
-            <View className="flex-row items-center justify-between mb-3">
-              <View className="flex-row items-center">
-                <View className="bg-teal-100 p-2 rounded-full mr-3">
-                  <Ionicons name="qr-code" size={20} color="#14b8a6" />
-                </View>
-                <Text className="text-lg font-bold text-gray-800">QR Code</Text>
-              </View>
-              <TouchableOpacity
-                onPress={onClose}
-                className="bg-gray-200 p-2 rounded-full"
-              >
-                <Ionicons name="close" size={20} color="#374151" />
-              </TouchableOpacity>
-            </View>
+      <View className="flex-1 bg-black/60 justify-center items-center px-6">
+        {/* Backdrop - Tap to close */}
+        <Pressable
+          onPress={onClose}
+          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+        />
 
-            {/* Product Title */}
-            <View className="space-y-2">
-              <View className="flex-row items-center flex-wrap gap-2">
-                <View className="bg-teal-100 px-3 py-1 rounded-full">
-                  <Text className="text-teal-800 font-mono text-xs font-medium">
-                    {product.qr_code}
-                  </Text>
-                </View>
-                {companyName && (
-                  <View className="bg-gray-200 px-3 py-1 rounded-full flex-row items-center">
-                    <Ionicons name="business" size={12} color="#6B7280" />
-                    <Text className="text-gray-700 text-xs ml-1">{companyName}</Text>
+        {/* Modal Content */}
+        <View className="w-full max-w-md" style={{ zIndex: 10 }}>
+          <View className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            {/* Header */}
+            <View className="bg-teal-500 px-6 py-5">
+              <View className="flex-row items-center justify-between mb-3">
+                <View className="flex-row items-center flex-1">
+                  <View className="bg-white/20 p-2.5 rounded-full mr-3">
+                    <Ionicons name="qr-code" size={22} color="white" />
                   </View>
-                )}
+                  <View className="flex-1">
+                    <Text className="text-white font-bold text-lg">QR Code Prodotto</Text>
+                  </View>
+                </View>
+                <TouchableOpacity
+                  onPress={onClose}
+                  className="bg-white/20 p-2 rounded-full"
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="close" size={20} color="white" />
+                </TouchableOpacity>
               </View>
-              <Text className="text-base font-semibold text-gray-800">
-                {product.tipo_segnale}
-              </Text>
-              <Text className="text-sm text-gray-600">
-                {product.forma} • {product.dimensioni} • {product.anno}
-              </Text>
-            </View>
-          </View>
 
-          <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+              {/* Product Info in Header */}
+              <View className="bg-white/10 rounded-lg px-3 py-2">
+                <View className="flex-row items-center flex-wrap gap-2 mb-2">
+                  <Text className="text-white font-mono text-xs font-semibold">
+                    📱 {product.qr_code}
+                  </Text>
+                  {companyName && (
+                    <>
+                      <Text className="text-white/60 text-xs">•</Text>
+                      <Text className="text-white/80 text-xs">{companyName}</Text>
+                    </>
+                  )}
+                </View>
+                <Text className="text-white font-semibold text-sm" numberOfLines={1}>
+                  {product.tipo_segnale}
+                </Text>
+                <Text className="text-white/80 text-xs mt-1">
+                  {product.forma} • {product.dimensioni} • {product.anno}
+                </Text>
+              </View>
+            </View>
+
+          <ScrollView
+            style={{ maxHeight: 500 }}
+            showsVerticalScrollIndicator={true}
+            contentContainerStyle={{ paddingBottom: 8 }}
+          >
             {/* QR Code Display */}
             <View className="px-6 py-6">
               <View className="items-center mb-6">
@@ -241,59 +246,42 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({
                     {formatDate(product.createdAt)}
                   </Text>
                 </View>
-
-                {product.gps_lat && product.gps_lng && (
-                  <View className="flex-row items-center justify-between py-3 px-4 bg-gray-50 rounded-lg">
-                    <View className="flex-row items-center">
-                      <Ionicons name="location-outline" size={16} color="#6B7280" />
-                      <Text className="text-gray-600 text-sm ml-2">GPS</Text>
-                    </View>
-                    <Text className="text-gray-800 text-xs font-mono">
-                      {formatGPS(product.gps_lat)}, {formatGPS(product.gps_lng)}
-                    </Text>
-                  </View>
-                )}
               </View>
             </View>
           </ScrollView>
 
           {/* Action Buttons */}
-          <View className="px-6 pb-6 pt-4 border-t border-gray-200">
-            <View className="flex-row gap-3">
-              <TouchableOpacity
-                onPress={handleDownload}
-                disabled={isDownloading}
-                className="flex-1 bg-teal-500 py-4 rounded-xl flex-row items-center justify-center"
-                activeOpacity={0.7}
-              >
-                {isDownloading ? (
-                  <>
-                    <ActivityIndicator size="small" color="white" />
-                    <Text className="text-white font-semibold ml-2">
-                      Scaricando...
-                    </Text>
-                  </>
-                ) : (
-                  <>
-                    <Ionicons name="download" size={20} color="white" />
-                    <Text className="text-white font-semibold ml-2">
-                      Scarica
-                    </Text>
-                  </>
-                )}
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={onClose}
-                className="flex-1 bg-gray-200 py-4 rounded-xl flex-row items-center justify-center"
-                activeOpacity={0.7}
-              >
-                <Ionicons name="close" size={20} color="#374151" />
-                <Text className="text-gray-700 font-semibold ml-2">
-                  Chiudi
-                </Text>
-              </TouchableOpacity>
-            </View>
+          <View className="p-6 bg-gray-50">
+            <TouchableOpacity
+              onPress={handleDownload}
+              disabled={isDownloading}
+              className="bg-teal-500 py-4 rounded-xl flex-row items-center justify-center"
+              activeOpacity={0.8}
+              style={{
+                shadowColor: '#14B8A6',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.2,
+                shadowRadius: 4,
+                elevation: 3,
+              }}
+            >
+              {isDownloading ? (
+                <>
+                  <ActivityIndicator size="small" color="white" />
+                  <Text className="text-white font-semibold text-base ml-2">
+                    Scaricando...
+                  </Text>
+                </>
+              ) : (
+                <>
+                  <Ionicons name="download" size={20} color="white" />
+                  <Text className="text-white font-semibold text-base ml-2">
+                    Scarica e Condividi
+                  </Text>
+                </>
+              )}
+            </TouchableOpacity>
+          </View>
           </View>
         </View>
       </View>

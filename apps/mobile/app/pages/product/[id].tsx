@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import QRCodeModal from '@/components/modals/QRCodeModal';
+import MapModal from '@/components/modals/MapModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMaintenancesByProduct } from '@/hooks/useMaintenance';
 import { useProduct } from '@/hooks/useProducts';
@@ -15,8 +16,9 @@ export default function ProductDetailPage() {
   const companyId = user?.companyId || 'default-company';
   const userId = user?.id || 'default-user';
 
-  // QR Code modal state
+  // Modal states
   const [showQRModal, setShowQRModal] = useState(false);
+  const [showMapModal, setShowMapModal] = useState(false);
 
   // Fetch real product data
   const { product, loading: loadingProduct, error: productError } = useProduct(id || null, companyId);
@@ -177,27 +179,20 @@ export default function ProductDetailPage() {
 
   return (
     <View className="flex-1 bg-gray-50">
-      {/* Header with QR Code Action */}
+      {/* Header */}
       <Header
         title="Dettaglio Prodotto"
         subtitle="Informazioni complete del dispositivo"
         backgroundColor="bg-teal-600"
         showBackButton={true}
         onBackPress={handleBackPress}
-        rightAction={
-          <TouchableOpacity
-            className="bg-white/20 p-3 rounded-full"
-            onPress={() => setShowQRModal(true)}
-          >
-            <Ionicons name="qr-code" size={24} color="white" />
-          </TouchableOpacity>
-        }
       />
-      
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-        
 
-
+      <ScrollView
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 120 }}
+      >
         {/* Product Info Card */}
         <View className="mx-4 mt-4 mb-6">
           <View className="bg-white rounded-xl shadow-sm p-6">
@@ -282,7 +277,8 @@ export default function ProductDetailPage() {
             </View>
           </View>
         </View>
-                {/* Product History */}
+
+        {/* Product History */}
         <View className="mx-4 mb-6">
           <Text className="text-gray-800 text-lg font-semibold mb-3">Cronologia Prodotto</Text>
           <View className="bg-white rounded-xl shadow-sm p-6">
@@ -451,6 +447,61 @@ export default function ProductDetailPage() {
 
       </ScrollView>
 
+      {/* Fixed Action Buttons Bottom Bar */}
+      <View className="bg-white border-t border-gray-200 px-4 py-3 shadow-lg">
+        <View className="flex-row gap-3">
+          {/* QR Code Button */}
+          <TouchableOpacity
+            onPress={() => setShowQRModal(true)}
+            className="flex-1 bg-teal-500 py-4 px-4 rounded-xl shadow-md"
+            activeOpacity={0.8}
+            style={{
+              shadowColor: '#14B8A6',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.2,
+              shadowRadius: 4,
+              elevation: 4,
+            }}
+          >
+            <View className="flex-row items-center justify-center">
+              <View className="bg-white/20 p-2.5 rounded-full">
+                <Ionicons name="qr-code" size={24} color="white" />
+              </View>
+              <View className="ml-3">
+                <Text className="text-white font-bold text-base">QR Code</Text>
+                <Text className="text-white/80 text-xs">Visualizza e condividi</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          {/* Map Button - Show only if GPS coordinates available */}
+          {product.gps_lat && product.gps_lng && (
+            <TouchableOpacity
+              onPress={() => setShowMapModal(true)}
+              className="flex-1 bg-blue-500 py-4 px-4 rounded-xl shadow-md"
+              activeOpacity={0.8}
+              style={{
+                shadowColor: '#3B82F6',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.2,
+                shadowRadius: 4,
+                elevation: 4,
+              }}
+            >
+              <View className="flex-row items-center justify-center">
+                <View className="bg-white/20 p-2.5 rounded-full">
+                  <Ionicons name="map" size={24} color="white" />
+                </View>
+                <View className="ml-3">
+                  <Text className="text-white font-bold text-base">Mappa</Text>
+                  <Text className="text-white/80 text-xs">Vedi posizione</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+
       {/* QR Code Modal */}
       {product && (
         <QRCodeModal
@@ -458,6 +509,15 @@ export default function ProductDetailPage() {
           onClose={() => setShowQRModal(false)}
           product={product}
           companyName={user?.companyId}
+        />
+      )}
+
+      {/* Map Modal */}
+      {product && product.gps_lat && product.gps_lng && (
+        <MapModal
+          visible={showMapModal}
+          onClose={() => setShowMapModal(false)}
+          product={product}
         />
       )}
     </View>
