@@ -83,9 +83,5 @@ USER nextjs
 # Expose port
 EXPOSE 3000
 
-# Health check for container orchestration
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
-
 # Start the Next.js server
 CMD ["node", "apps/web/server.js"]
