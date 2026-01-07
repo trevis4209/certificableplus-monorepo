@@ -33,8 +33,8 @@ WORKDIR /app
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/package-lock.json* ./package-lock.json
 
-# Install dependencies with clean install
-RUN npm ci --omit=dev --ignore-scripts
+# Install ALL dependencies (including devDependencies needed for build)
+RUN npm ci --ignore-scripts
 
 # ============================================
 # Stage 4: Build the application
